@@ -98,9 +98,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             const daysTable = document.querySelector('#daysTable tbody');
             
-            // 固定第16天为今天（5月28日）
-            const day16Date = new Date(2023, 4, 28); // 月份0-11，5月是4
+            // 动态获取北京时间作为第16天
+            function getBeijingToday() {
+                const now = new Date();
+                const utc8Offset = 8 * 60; // 8 小时
+                const localOffset = now.getTimezoneOffset(); // 当前时区相对UTC的分钟数
+                const beijingTime = new Date(now.getTime() + (utc8Offset + localOffset) * 60000);
+                return beijingTime;
+            }
             
+            const day16Date = getBeijingToday();  // 动态赋值
+
             // 创建31天的行（1-31天）
             for (let i = 0; i < 31; i++) {
                 const dayNum = i + 1;
